@@ -1,0 +1,115 @@
+/* All coding, design, ideas, fantastical inventions, etc. etc. copyright 2014 Kyle Conrad */
+/* Contact: kyle@kyleconrad.com */
+
+@charset "utf-8";
+
+$experimental-support-for-khtml: false;
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/typography";
+@import "compass/css3/box";
+
+@import "includes/_rem.scss";
+@import "includes/_animation.scss";
+
+
+/* MIX-INS */
+@mixin breakpoint($point) {
+	@if $point == large {
+		@media only screen and (min-width : 1401px) { @content; }
+	}
+	@else if $point == landscape {
+		@media only screen and (min-width : 802px) and (max-width : 1025px) { @content; }
+	}
+	@else if $point == portrait {
+		@media only screen and (min-width : 642px) and (max-width : 801px) { @content; }
+	}
+	@else if $point == mobile {
+		@media only screen and (max-width : 641px) { @content; }
+	}
+}
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+
+/* ADDITIONAL RESET */
+html {
+	min-height: 100%;
+	height: 100%;
+	-webkit-text-size-adjust: none;
+}
+body {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	overflow-x: hidden;
+}
+* {
+   	@include box-sizing(border-box);
+
+   	&:before,
+   	&:after {
+   		@include box-sizing(border-box);
+   	}
+}
+
+/* CLEAR & FLOATS */
+.left {
+	float: left !important;
+}
+.right {
+	float: right !important;
+}
+.clear {
+	clear: both !important;
+	display: block;
+	overflow: hidden;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+.clearfix {
+	display: inline-block;
+
+	&:after {
+		clear: both;
+		content: ' ';
+		display: block;
+		font-size: 0;
+		line-height: 0;
+		visibility: hidden;
+		width: 0;
+		height: 0;
+	}
+}
+* html .clearfix {
+	height: 1%;
+}
+
+.nomobile {
+	@include breakpoint(mobile) {
+		display: none;
+	}
+}
+
+
+/* INCLUDED */
+@import 'base/_grid.scss';
+
+@import 'base/_glyphs.scss';
+@import 'base/_text.scss';
+@import 'base/_images.scss';
+
+@import 'base/_nav.scss';
+@import 'base/_header.scss';
+@import 'base/_main.scss';
+@import 'base/_footer.scss';
+
+
+html {
+	background: purple;
+}

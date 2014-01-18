@@ -1,0 +1,18 @@
+{
+  "name": "blank",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "devDependencies": {
+    "gulp": "~3.4.0",
+    "gulp-livereload": "~0.2.0",
+    "express": "~3.4.8",
+    "tiny-lr": "0.0.5",
+    "connect-livereload": "~0.3.2",
+    "gulp-open": "~0.2.7",
+    "gulp-ruby-sass": "~0.1.2"
+  }
+}
