@@ -77,7 +77,6 @@ gulp.task('html', function() {
 	gulp.src("./prod/**/*.html")
 		.pipe(htmlbuild({
 			js: function (files, callback) {
-	      		// concatenate js files
 	      		gulp.run('scripts');
 	      		callback(null, [ '/js/header.js' ]);
 	    	}
@@ -128,7 +127,6 @@ gulp.task('watch', function() {
 gulp.task('default', function(){
 	gulp.run(
 		'sass',
-		'scripts',
 		'serve',
 		'watch'
 	);
