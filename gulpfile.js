@@ -12,6 +12,7 @@ var gulp = require('gulp'),
 	sass = require('gulp-ruby-sass'),
 	rimraf = require('gulp-rimraf'),
 	minify = require('gulp-minify-css'),
+	htmlbuild = require('gulp-htmlbuild'),
 	uglify = require('gulp-uglify'),
 	imagemin = require('gulp-imagemin'),
 
@@ -54,25 +55,8 @@ gulp.task('sass', function () {
         .pipe(refresh(lrserver));
 });
 
-// JS concat
-gulp.task('scripts', function() {
-	gulp.src('./prod/js/ie/*.js')
-		.pipe(concat('ie.js'))
-		.pipe(gulp.dest('./prod/js'));
 
-	gulp.src('./prod/js/header/*.js')
-		.pipe(concat('header.js'))
-		.pipe(gulp.dest('./prod/js'));
-
-	gulp.src('./prod/js/footer/*.js')
-		.pipe(concat('footer.js'))
-		.pipe(gulp.dest('./prod/js'));
-
-	gulp.src('./prod/js/*.js')
-	    .pipe(refresh(lrserver));
-});
-
-// Clear 'dist' directory, then minifying, uglifying, & processing for build
+// Clear 'dist' directory, then minifying, copying, processing, uglifying, etc for build
 gulp.task('remove', function() {
 	gulp.src('./dist/**/*', { read: false })
 		.pipe(rimraf());
@@ -84,10 +68,30 @@ gulp.task('minify', function() {
 		}))
 		.pipe(gulp.dest('./dist/css'));
 });
+gulp.task('scripts', function() {
+	gulp.src('./prod/js/header/*.js')
+		.pipe(concat('header.js'))
+		.pipe(gulp.dest('./dist/js'));
+});
+gulp.task('html', function() {
+	gulp.src("./prod/**/*.html")
+		.pipe(htmlbuild({
+			js: function (files, callback) {
+	      		// concatenate js files
+	      		gulp.run('scripts');
+	      		callback(null, [ '/js/header.js' ]);
+	    	}
+	  	}))
+	  	.pipe(gulp.dest("./dist"));
+});
 gulp.task('uglify', function() {
   	gulp.src('./prod/js/*.js')
-    	.pipe(uglify())
-    	.pipe(gulp.dest('./dist/js'));
+      	.pipe(uglify())
+      	.pipe(gulp.dest('./dist/js'));
+
+	gulp.src('./dist/js/*.js')
+		.pipe(uglify())
+		.pipe(gulp.dest('./dist/js'));
 });
 gulp.task('imagemin', function () {
     gulp.src('./prod/img/**/*')
@@ -109,7 +113,8 @@ gulp.task('watch', function() {
 		    .pipe(refresh(lrserver));
 	});
 	gulp.watch('./prod/js/**/*.js', function() {
-		gulp.run('scripts');
+		gulp.src('./prod/**/*.js')
+		    .pipe(refresh(lrserver));
 
 	});
 	gulp.watch('./prod/**/*.html', function() {
@@ -135,6 +140,7 @@ gulp.task('build', function(){
 		'sass',
 		'remove',
 		'minify',
+		'html',
 		'uglify',
 		'imagemin'
 	);
