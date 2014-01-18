@@ -1,14 +1,19 @@
 var gulp = require('gulp'),
 
 	// Server plugins
+	express = require('express'),
 	refresh = require('gulp-livereload'),
 	lrserver = require('tiny-lr')(),
-	express = require('express'),
 	livereload = require('connect-livereload'),
 
 	// Other plugins
 	open = require('gulp-open'),
+	concat = require('gulp-concat'),
 	sass = require('gulp-ruby-sass'),
+	rimraf = require('gulp-rimraf'),
+	minify = require('gulp-minify-css'),
+	uglify = require('gulp-uglify'),
+	imagemin = require('gulp-imagemin'),
 
 	// Server settings
 	lrport = 35729,
@@ -49,6 +54,48 @@ gulp.task('sass', function () {
         .pipe(refresh(lrserver));
 });
 
+// JS concat
+gulp.task('scripts', function() {
+	gulp.src('./prod/js/ie/*.js')
+		.pipe(concat('ie.js'))
+		.pipe(gulp.dest('./prod/js'));
+
+	gulp.src('./prod/js/header/*.js')
+		.pipe(concat('header.js'))
+		.pipe(gulp.dest('./prod/js'));
+
+	gulp.src('./prod/js/footer/*.js')
+		.pipe(concat('footer.js'))
+		.pipe(gulp.dest('./prod/js'));
+
+	gulp.src('./prod/js/*.js')
+	    .pipe(refresh(lrserver));
+});
+
+// Clear 'dist' directory, then minifying, uglifying, & processing for build
+gulp.task('remove', function() {
+	gulp.src('./dist/**/*', { read: false })
+		.pipe(rimraf());
+});
+gulp.task('minify', function() {
+	gulp.src('./prod/css/*.css')
+		.pipe(minify({
+			keepSpecialComments: 0
+		}))
+		.pipe(gulp.dest('./dist/css'));
+});
+gulp.task('uglify', function() {
+  	gulp.src('./prod/js/*.js')
+    	.pipe(uglify())
+    	.pipe(gulp.dest('./dist/js'));
+});
+gulp.task('imagemin', function () {
+    gulp.src('./prod/img/**/*')
+        .pipe(imagemin({
+        	progressive: true
+        }))
+        .pipe(gulp.dest('./dist/img'));
+});
 
 
 
@@ -57,9 +104,13 @@ gulp.task('watch', function() {
 	gulp.watch('./prod/sass/*.scss', function() {
 		gulp.run('sass');
 	});
-	gulp.watch('./prod/js/**/*.js', function() {
-		gulp.src('./prod/js/**/*.js')
+	gulp.watch('./prod/img/**/*', function() {
+		gulp.src('./prod/img/**/*')
 		    .pipe(refresh(lrserver));
+	});
+	gulp.watch('./prod/js/**/*.js', function() {
+		gulp.run('scripts');
+
 	});
 	gulp.watch('./prod/**/*.html', function() {
 		gulp.src('./prod/**/*.html')
@@ -72,14 +123,19 @@ gulp.task('watch', function() {
 gulp.task('default', function(){
 	gulp.run(
 		'sass',
+		'scripts',
 		'serve',
 		'watch'
 	);
 });
 
-// Build functionality with moving, compiling, etc.
-//gulp.task('build', function(){
-//	gulp.run(
-//
-//	);
-//});
+// Build functionality with cleaning, moving, compiling, etc.
+gulp.task('build', function(){
+	gulp.run(
+		'sass',
+		'remove',
+		'minify',
+		'uglify',
+		'imagemin'
+	);
+});

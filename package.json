@@ -13,6 +13,13 @@
     "tiny-lr": "0.0.5",
     "connect-livereload": "~0.3.2",
     "gulp-open": "~0.2.7",
-    "gulp-ruby-sass": "~0.1.2"
+    "gulp-ruby-sass": "~0.1.2",
+    "gulp-concat": "~2.1.7"
+  },
+  "dependencies": {
+    "gulp-minify-css": "~0.2.0",
+    "gulp-imagemin": "~0.1.4",
+    "gulp-rimraf": "0.0.8",
+    "gulp-uglify": "~0.1.0"
   }
 }
