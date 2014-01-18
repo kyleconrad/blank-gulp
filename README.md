@@ -12,7 +12,7 @@ Running local set up will install all necessary bundles and then run a server wi
 If you don't already have SASS & Compass installed on your system, then you will have to install those prior to running gulp. The easiest way is the following:
 
     $ gem update --system
-    $ gem update --system
+    $ gem install sass
     $ gem install compass
 
 (Additional installation instructions for both can be found here: http://sass-lang.com/install & http://compass-style.org/install/)
