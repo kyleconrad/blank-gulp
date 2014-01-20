@@ -1,22 +1,13 @@
 Blank project base with Gulp.js as the build system.
 
 ## Local Setup 
-Running local set up will install all necessary bundles and then run a server with livereload. It watches all SASS, JS, and images, then compiles and reloads accordingly.
+Running local set up will install all necessary bundles and dependencies and then run a server with livereload. It watches all SASS, JS, and images, then compiles and reloads accordingly.
     
     $ npm install -g gulp
     $ cd blank-gulp
     $ npm install
     $ bundle install
     $ gulp
-
-
-If you don't already have SASS & Compass installed on your system, then you will have to install those prior to running gulp. The easiest way is the following:
-
-    $ gem update --system
-    $ gem install sass
-    $ gem install compass
-
-(Additional installation instructions for both can be found here: http://sass-lang.com/install & http://compass-style.org/install/)
 
 
 ## Building
