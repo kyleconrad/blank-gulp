@@ -1,3 +1,5 @@
 dist/
 dist/**/*
+node-modules/
+node-modules/**/*
 *.lock
