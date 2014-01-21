@@ -133,10 +133,11 @@ gulp.task('default', function(){
 });
 
 // Build functionality with cleaning, moving, compiling, etc.
-gulp.task('build', function(){
+gulp.task('build', [
+		'remove'
+	], function(){
 	gulp.run(
 		'sass',
-		'remove',
 		'minify',
 		'html',
 		'uglify',
