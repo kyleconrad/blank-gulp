@@ -104,7 +104,7 @@ gulp.task('imagemin', function () {
 
 // Watching files for changes before reloading
 gulp.task('watch', function() {
-	gulp.watch('./prod/sass/*.scss', function() {
+	gulp.watch('./prod/sass/**/*.scss', function() {
 		gulp.run('sass');
 	});
 	gulp.watch('./prod/img/**/*', function() {
