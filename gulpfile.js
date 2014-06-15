@@ -25,7 +25,7 @@ gulp.task('serve', function() {
 
 
 // SASS compiling & reloading
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     gulp.src('./prod/sass/*.scss')
         .pipe(sass({
         	compass: true,
@@ -50,39 +50,35 @@ gulp.task('remove', function() {
 		.pipe(rimraf());
 });
 
-gulp.task('minify', function() {
-	gulp.src('./prod/css/*.css')
+gulp.task('minify', ['sass'], function() {
+	return gulp.src('./prod/css/*.css')
 		.pipe(minify({
 			keepSpecialComments: 0
 		}))
 		.pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('html', function() {
-	gulp.src("./prod/**/*.html")
+gulp.task('html', ['minify'], function() {
+	return gulp.src("./prod/**/*.html")
 		.pipe(htmlbuild({
 			js: htmlbuild.preprocess.js(function (block) {
 	      		gulp.src('./prod/js/header/*.js')
 					.pipe(concat('header.js'))
-					.pipe(gulp.dest('./dist/js'));
+					.pipe(gulp.dest('./prod/js'));
 	      		block.end('/js/header.js');
 	    	})
 	  	}))
 	  	.pipe(gulp.dest('./dist'));
 });
 
-gulp.task('uglify', function() {
-  	gulp.src('./prod/js/*.js')
+gulp.task('uglify', ['html'], function() {
+  	return gulp.src('./prod/js/*.js')
       	.pipe(uglify())
       	.pipe(gulp.dest('./dist/js'));
-
-	gulp.src('./dist/js/*.js')
-		.pipe(uglify())
-		.pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('imagemin', function () {
-    gulp.src('./prod/img/**/*')
+gulp.task('imagemin', ['uglify'], function() {
+    return gulp.src('./prod/img/**/*')
         .pipe(imagemin({
         	progressive: true,
         	svgoPlugins: [{
@@ -91,6 +87,13 @@ gulp.task('imagemin', function () {
         }))
         .pipe(gulp.dest('./dist/img'));
 });
+
+gulp.task('cleanup', ['imagemin'], function() {
+    return gulp.src('./prod/js/header.js', {
+			read: false
+		})
+		.pipe(rimraf());
+})
 
 
 
@@ -123,24 +126,21 @@ gulp.task('watch', function() {
 
 
 // Default functionality includes server with browser sync and watching
-gulp.task('default',
-	['serve'],
-	function(){
-	gulp.start(
+gulp.task('default', ['serve'], function(){
+	return gulp.start(
 		'sass',
 		'watch'
 	);
 });
 
 // Build functionality with cleaning, moving, compiling, etc.
-gulp.task('build',
-	['remove'],
-    function(){
-	gulp.start(
-		'sass',
-		'minify',
+gulp.task('build', ['remove'], function(){
+	return gulp.start(
+	    'sass',
+	    'minify',
 		'html',
-		//'uglify',
-		'imagemin'
+		'uglify',
+		'imagemin',
+		'cleanup'
 	);
 });
