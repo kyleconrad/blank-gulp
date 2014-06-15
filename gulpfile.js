@@ -116,11 +116,12 @@ gulp.task('watch', function() {
 
 
 
-// Default functionality includes server with livereload and watching
-gulp.task('default', function(){
-	gulp.run(
+// Default functionality includes server with browser sync and watching
+gulp.task('default',
+	['serve'],
+	function(){
+	gulp.start(
 		'sass',
-		'serve',
 		'watch'
 	);
 });
@@ -129,7 +130,7 @@ gulp.task('default', function(){
 gulp.task('build',
 	['remove'],
     function(){
-	gulp.run(
+	gulp.start(
 		'sass',
 		'minify',
 		'html',
