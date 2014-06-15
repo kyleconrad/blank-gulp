@@ -40,8 +40,6 @@ gulp.task('sass', function() {
 });
 
 
-
-
 // Clear 'dist' directory, then minifying, copying, processing, uglifying, etc for build
 gulp.task('remove', function() {
 	gulp.src('./dist/**/*', {
@@ -94,8 +92,6 @@ gulp.task('cleanup', ['imagemin'], function() {
 		})
 		.pipe(rimraf());
 })
-
-
 
 
 // Watching files for changes before reloading
