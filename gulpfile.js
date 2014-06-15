@@ -1,10 +1,7 @@
 var gulp = require('gulp'),
 
-	// Server plugins
-	express = require('express'),
-	refresh = require('gulp-livereload'),
-	lrserver = require('tiny-lr')(),
-	livereload = require('connect-livereload'),
+	// Server and sync
+	browserSync = require('browser-sync'),
 
 	// Other plugins
 	open = require('gulp-open'),
@@ -21,24 +18,13 @@ var gulp = require('gulp'),
 	serverport = 5000;
 
 
-// Server configuration with livereload enabled
-var server = express();
-server.use(livereload({
-	port: lrport
-}));
-server.use(express.static('./prod'));
-
-
-
 // Server initiation and livereload, opens server in browser
 gulp.task('serve', function() {
-	server.listen(serverport);
-	lrserver.listen(lrport);
-
-	gulp.src('./prod/index.html')
-	    .pipe(open('', {
-	    	url: 'http://localhost:' + serverport
-	    }));
+	browserSync.init(null, {
+		server: {
+			baseDir: "./prod"
+		}
+    });
 });
 
 
@@ -52,7 +38,7 @@ gulp.task('sass', function () {
         	quiet: true
         }))
         .pipe(gulp.dest('./prod/css'))
-        .pipe(refresh(lrserver));
+        //.pipe(refresh(lrserver));
 });
 
 
@@ -103,32 +89,32 @@ gulp.task('imagemin', function () {
 
 
 // Watching files for changes before reloading
-gulp.task('watch', function() {
-	gulp.watch('./prod/sass/**/*.scss', function() {
-		gulp.run('sass');
-	});
-	gulp.watch('./prod/img/**/*', function() {
-		gulp.src('./prod/img/**/*')
-		    .pipe(refresh(lrserver));
-	});
-	gulp.watch('./prod/js/**/*.js', function() {
-		gulp.src('./prod/**/*.js')
-		    .pipe(refresh(lrserver));
+// gulp.task('watch', function() {
+// 	gulp.watch('./prod/sass/**/*.scss', function() {
+// 		gulp.run('sass');
+// 	});
+// 	gulp.watch('./prod/img/**/*', function() {
+// 		gulp.src('./prod/img/**/*')
+// 		    .pipe(refresh(lrserver));
+// 	});
+// 	gulp.watch('./prod/js/**/*.js', function() {
+// 		gulp.src('./prod/**/*.js')
+// 		    .pipe(refresh(lrserver));
 
-	});
-	gulp.watch('./prod/**/*.html', function() {
-		gulp.src('./prod/**/*.html')
-		    .pipe(refresh(lrserver));
-	});
-});
+// 	});
+// 	gulp.watch('./prod/**/*.html', function() {
+// 		gulp.src('./prod/**/*.html')
+// 		    .pipe(refresh(lrserver));
+// 	});
+// });
 
 
 // Default functionality includes server with livereload and watching
 gulp.task('default', function(){
 	gulp.run(
 		'sass',
-		'serve',
-		'watch'
+		'serve'
+		//'watch'
 	);
 });
 

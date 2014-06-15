@@ -8,10 +8,7 @@
   "author": "",
   "devDependencies": {
     "gulp": "~3.8.0",
-    "gulp-livereload": "~2.1.0",
-    "express": "~4.4.3",
-    "tiny-lr": "0.0.7",
-    "connect-livereload": "~0.4.0",
+    "browser-sync": "^0.9.1",
     "gulp-open": "~0.2.8",
     "gulp-ruby-sass": "~0.5.0",
     "gulp-concat": "~2.2.0"
