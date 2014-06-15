@@ -44,9 +44,12 @@ gulp.task('sass', function () {
 
 // Clear 'dist' directory, then minifying, copying, processing, uglifying, etc for build
 gulp.task('remove', function() {
-	gulp.src('./dist/**/*', { read: false })
+	gulp.src('./dist/**/*', {
+			read: false
+		})
 		.pipe(rimraf());
 });
+
 gulp.task('minify', function() {
 	gulp.src('./prod/css/*.css')
 		.pipe(minify({
@@ -54,21 +57,20 @@ gulp.task('minify', function() {
 		}))
 		.pipe(gulp.dest('./dist/css'));
 });
-gulp.task('scripts', function() {
-	gulp.src('./prod/js/header/*.js')
-		.pipe(concat('header.js'))
-		.pipe(gulp.dest('./dist/js'));
-});
+
 gulp.task('html', function() {
 	gulp.src("./prod/**/*.html")
 		.pipe(htmlbuild({
-			js: function (files, callback) {
-	      		gulp.run('scripts');
-	      		callback(null, [ '/js/header.js' ]);
-	    	}
+			js: htmlbuild.preprocess.js(function (block) {
+	      		gulp.src('./prod/js/header/*.js')
+					.pipe(concat('header.js'))
+					.pipe(gulp.dest('./dist/js'));
+	      		block.end('/js/header.js');
+	    	})
 	  	}))
-	  	.pipe(gulp.dest("./dist"));
+	  	.pipe(gulp.dest('./dist'));
 });
+
 gulp.task('uglify', function() {
   	gulp.src('./prod/js/*.js')
       	.pipe(uglify())
@@ -78,10 +80,14 @@ gulp.task('uglify', function() {
 		.pipe(uglify())
 		.pipe(gulp.dest('./dist/js'));
 });
+
 gulp.task('imagemin', function () {
     gulp.src('./prod/img/**/*')
         .pipe(imagemin({
-        	progressive: true
+        	progressive: true,
+        	svgoPlugins: [{
+        		removeViewBox: false
+        	}]
         }))
         .pipe(gulp.dest('./dist/img'));
 });
@@ -134,7 +140,7 @@ gulp.task('build',
 		'sass',
 		'minify',
 		'html',
-		'uglify',
+		//'uglify',
 		'imagemin'
 	);
 });
