@@ -4,18 +4,14 @@ var gulp = require('gulp'),
 	browserSync = require('browser-sync'),
 
 	// Other plugins
-	open = require('gulp-open'),
-	concat = require('gulp-concat'),
 	sass = require('gulp-ruby-sass'),
+	concat = require('gulp-concat'),
 	rimraf = require('gulp-rimraf'),
 	minify = require('gulp-minify-css'),
 	htmlbuild = require('gulp-htmlbuild'),
 	uglify = require('gulp-uglify'),
-	imagemin = require('gulp-imagemin'),
+	imagemin = require('gulp-imagemin');
 
-	// Server settings
-	lrport = 35729,
-	serverport = 5000;
 
 
 // Server initiation and livereload, opens server in browser
@@ -28,18 +24,22 @@ gulp.task('serve', function() {
 });
 
 
-
 // SASS compiling & reloading
 gulp.task('sass', function () {
     gulp.src('./prod/sass/*.scss')
         .pipe(sass({
         	compass: true,
+        	precision: 3,
         	noCache: true,
         	quiet: true
         }))
         .pipe(gulp.dest('./prod/css'))
-        //.pipe(refresh(lrserver));
+        .pipe(browserSync.reload({
+        	stream: true
+        }));
 });
+
+
 
 
 // Clear 'dist' directory, then minifying, copying, processing, uglifying, etc for build
@@ -85,6 +85,7 @@ gulp.task('imagemin', function () {
         }))
         .pipe(gulp.dest('./dist/img'));
 });
+
 
 
 
