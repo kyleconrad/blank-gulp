@@ -18,7 +18,7 @@ var gulp = require('gulp'),
 gulp.task('serve', function() {
 	browserSync.init(null, {
 		server: {
-			baseDir: "./prod"
+			baseDir: './prod'
 		}
     });
 });
@@ -90,39 +90,45 @@ gulp.task('imagemin', function () {
 
 
 // Watching files for changes before reloading
-// gulp.task('watch', function() {
-// 	gulp.watch('./prod/sass/**/*.scss', function() {
-// 		gulp.run('sass');
-// 	});
-// 	gulp.watch('./prod/img/**/*', function() {
-// 		gulp.src('./prod/img/**/*')
-// 		    .pipe(refresh(lrserver));
-// 	});
-// 	gulp.watch('./prod/js/**/*.js', function() {
-// 		gulp.src('./prod/**/*.js')
-// 		    .pipe(refresh(lrserver));
+gulp.task('watch', function() {
+	gulp.watch('./prod/sass/**/*.scss', ['sass']);
 
-// 	});
-// 	gulp.watch('./prod/**/*.html', function() {
-// 		gulp.src('./prod/**/*.html')
-// 		    .pipe(refresh(lrserver));
-// 	});
-// });
+	gulp.watch('./prod/img/**/*', function() {
+		gulp.src('./prod/img/**/*')
+		    .pipe(browserSync.reload({
+		    	stream: true
+		    }));
+	});
+
+	gulp.watch('./prod/js/**/*.js', function() {
+		gulp.src('./prod/**/*.js')
+		    .pipe(browserSync.reload({
+		    	stream: true,
+		    	once: true
+		    }));
+	});
+
+	gulp.watch('./prod/**/*.html', function() {
+		browserSync.reload();
+	});
+});
+
+
 
 
 // Default functionality includes server with livereload and watching
 gulp.task('default', function(){
 	gulp.run(
 		'sass',
-		'serve'
-		//'watch'
+		'serve',
+		'watch'
 	);
 });
 
 // Build functionality with cleaning, moving, compiling, etc.
-gulp.task('build', [
-		'remove'
-	], function(){
+gulp.task('build',
+	['remove'],
+    function(){
 	gulp.run(
 		'sass',
 		'minify',
