@@ -95,16 +95,16 @@ gulp.task('cleanup', ['imagemin'], function() {
 
 
 // Watching files for changes before reloading
-gulp.task('watch', function() {
-	gulp.watch('./prod/sass/**/*.scss', ['sass']);
-
+gulp.task('watch-img', function() {
 	gulp.watch('./prod/img/**/*', function() {
 		gulp.src('./prod/img/**/*')
 		    .pipe(browserSync.reload({
 		    	stream: true
 		    }));
 	});
+});
 
+gulp.task('watch-js', function() {
 	gulp.watch('./prod/js/**/*.js', function() {
 		gulp.src('./prod/**/*.js')
 		    .pipe(browserSync.reload({
@@ -112,9 +112,16 @@ gulp.task('watch', function() {
 		    	once: true
 		    }));
 	});
+});
 
+gulp.task('watch-html', function() {
 	gulp.watch('./prod/**/*.html', function() {
-		browserSync.reload();
+		//browserSync.reload();
+		gulp.src('./prod/**/*.html')
+		    .pipe(browserSync.reload({
+		    	stream: true,
+		    	once: true
+		    }));
 	});
 });
 
@@ -122,11 +129,11 @@ gulp.task('watch', function() {
 
 
 // Default functionality includes server with browser sync and watching
-gulp.task('default', ['serve'], function(){
-	return gulp.start(
-		'sass',
-		'watch'
-	);
+gulp.task('default', ['serve', 'sass'], function(){
+	gulp.watch('./prod/sass/**/*.scss', ['sass']);
+	gulp.watch('./prod/img/**/*', ['watch-img']);
+	gulp.watch('./prod/js/**/*.js', ['watch-js']);
+	gulp.watch('./prod/**/*.html', ['watch-html']);
 });
 
 // Build functionality with cleaning, moving, compiling, etc.
