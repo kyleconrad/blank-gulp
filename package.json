@@ -1,7 +1,7 @@
 {
   "name": "blank",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Blank Gulp Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
