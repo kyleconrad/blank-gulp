@@ -19,7 +19,8 @@ gulp.task('serve', function() {
 	browserSync.init(null, {
 		server: {
 			baseDir: './prod'
-		}
+		},
+		host: 'localhost'
     });
 });
 
