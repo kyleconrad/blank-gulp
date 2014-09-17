@@ -92,7 +92,7 @@ gulp.task('cleanup', ['imagemin'], function() {
 			read: false
 		})
 		.pipe(rimraf());
-})
+});
 
 
 // Watching files for changes before reloading
