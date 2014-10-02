@@ -1,22 +1,22 @@
 {
   "name": "blank",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Blank Gulp Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "devDependencies": {
-    "gulp": "~3.8.0",
+    "gulp": "~3.8.8",
     "browser-sync": "^0.9.1",
     "gulp-ruby-sass": "~0.5.0",
     "gulp-concat": "~2.2.0"
   },
   "dependencies": {
-    "gulp-minify-css": "~0.3.4",
-    "gulp-imagemin": "~0.6.1",
+    "gulp-minify-css": "~0.3.10",
+    "gulp-imagemin": "~0.6.2",
     "gulp-rimraf": "0.1.0",
-    "gulp-uglify": "~0.3.0",
-    "gulp-htmlbuild": "~0.2.0"
+    "gulp-uglify": "~0.3.2",
+    "gulp-htmlbuild": "~0.2.1"
   }
 }
