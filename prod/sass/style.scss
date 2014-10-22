@@ -85,9 +85,6 @@ body {
 		height: 0;
 	}
 }
-* html .clearfix {
-	height: 1%;
-}
 
 .nomobile {
 	@include breakpoint(mobile) {
