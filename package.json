@@ -1,6 +1,6 @@
 {
   "name": "blank",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Blank Gulp Project",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,8 @@
   "devDependencies": {
     "gulp": "~3.8.8",
     "browser-sync": "^0.9.1",
-    "gulp-ruby-sass": "~0.5.0",
-    "gulp-concat": "~2.2.0"
+    "gulp-concat": "~2.2.0",
+    "gulp-sass": "^1.2.0"
   },
   "dependencies": {
     "gulp-minify-css": "~0.3.10",

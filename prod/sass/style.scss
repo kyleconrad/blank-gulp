@@ -4,12 +4,9 @@
 @charset "utf-8";
 
 $experimental-support-for-khtml: false;
-@import "compass/reset";
-@import "compass/css3";
-@import "compass/typography";
-@import "compass/css3/box";
-
-@import "includes/_animation.scss";
+@import "bourbon/bourbon";
+@import "includes/reset";
+@import "includes/animation";
 
 
 /* MIX-INS */
@@ -79,14 +76,14 @@ body {
 
 
 /* INCLUDED */
-@import 'base/_grid.scss';
-@import 'base/_zindex.scss';
+@import 'base/grid';
+@import 'base/zindex';
 
-@import 'base/_glyphs.scss';
-@import 'base/_text.scss';
-@import 'base/_images.scss';
+@import 'base/glyphs';
+@import 'base/text';
+@import 'base/images';
 
-@import 'base/_nav.scss';
-@import 'base/_header.scss';
-@import 'base/_main.scss';
-@import 'base/_footer.scss';
+@import 'base/nav';
+@import 'base/header';
+@import 'base/main';
+@import 'base/footer';

@@ -4,7 +4,7 @@ var gulp = require('gulp'),
 	browserSync = require('browser-sync'),
 
 	// Other plugins
-	sass = require('gulp-ruby-sass'),
+	sass = require('gulp-sass'),
 	concat = require('gulp-concat'),
 	rimraf = require('gulp-rimraf'),
 	minify = require('gulp-minify-css'),
@@ -29,10 +29,7 @@ gulp.task('serve', function() {
 gulp.task('sass', function() {
     gulp.src('./prod/sass/*.scss')
         .pipe(sass({
-        	compass: true,
-        	precision: 3,
-        	noCache: true,
-        	quiet: true
+        	errLogToConsole: true
         }))
         .pipe(gulp.dest('./prod/css'))
         .pipe(browserSync.reload({
