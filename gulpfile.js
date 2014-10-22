@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 
 	// Other plugins
 	sass = require('gulp-sass'),
+	sourcemaps = require('gulp-sourcemaps'),
 	concat = require('gulp-concat'),
 	rimraf = require('gulp-rimraf'),
 	minify = require('gulp-minify-css'),
@@ -28,9 +29,11 @@ gulp.task('serve', function() {
 // SASS compiling & reloading
 gulp.task('sass', function() {
     gulp.src('./prod/sass/*.scss')
+	    .pipe(sourcemaps.init())
         .pipe(sass({
         	errLogToConsole: true
         }))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('./prod/css'))
         .pipe(browserSync.reload({
         	stream: true
