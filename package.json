@@ -9,15 +9,15 @@
   "devDependencies": {
     "gulp": "~3.8.8",
     "browser-sync": "^0.9.1",
-    "gulp-concat": "~2.2.0",
+    "gulp-concat": "^2.2.0",
     "gulp-sass": "^1.2.0",
     "gulp-sourcemaps": "^1.2.4"
   },
   "dependencies": {
     "gulp-minify-css": "~0.3.10",
-    "gulp-imagemin": "~0.6.2",
-    "gulp-rimraf": "0.1.0",
-    "gulp-uglify": "~0.3.2",
-    "gulp-htmlbuild": "~0.2.1"
+    "gulp-imagemin": "^0.6.2",
+    "gulp-rimraf": "^0.1.0",
+    "gulp-uglify": "^0.3.2",
+    "gulp-htmlbuild": "^0.2.1"
   }
 }
