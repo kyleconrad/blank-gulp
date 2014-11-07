@@ -140,11 +140,11 @@ gulp.task('default', ['serve', 'sass'], function(){
 // Build functionality with cleaning, moving, compiling, etc.
 gulp.task('build', ['remove'], function(){
 	return gulp.start(
-	    'sass',
-	    'minify',
-		'html',
-		'uglify',
-		'imagemin',
+	 //    'sass',
+	 //    'minify',
+		// 'html',
+		// 'uglify',
+		// 'imagemin',
 		'cleanup'
 	);
 });
