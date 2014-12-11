@@ -5,7 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Kyle Conrad <kyle@kyleconrad.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyleconrad/blank-gulp.git"
+  },
   "devDependencies": {
     "gulp": "~3.8.9",
     "browser-sync": "^1.5.8",
