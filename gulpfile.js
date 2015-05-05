@@ -100,32 +100,26 @@ gulp.task('images', function() {
 
 // Watching files for changes before reloading
 gulp.task('watch-img', function() {
-	gulp.watch('./prod/img/**/*', function() {
-		gulp.src('./prod/img/**/*')
-		    .pipe(browserSync.reload({
-		    	stream: true
-		    }));
-	});
+	gulp.src('./prod/img/**/*')
+	    .pipe(browserSync.reload({
+	    	stream: true
+	    }));
 });
 
 gulp.task('watch-js', function() {
-	gulp.watch('./prod/js/**/*.js', function() {
-		gulp.src('./prod/**/*.js')
-		    .pipe(browserSync.reload({
-		    	stream: true,
-		    	once: true
-		    }));
-	});
+	gulp.src('./prod/**/*.js')
+	    .pipe(browserSync.reload({
+	    	stream: true,
+	    	once: true
+	    }));
 });
 
 gulp.task('watch-html', function() {
-	gulp.watch('./prod/**/*.html', function() {
-		gulp.src('./prod/**/*.html')
-		    .pipe(browserSync.reload({
-		    	stream: true,
-		    	once: true
-		    }));
-	});
+	gulp.src('./prod/**/*.html')
+	    .pipe(browserSync.reload({
+	    	stream: true,
+	    	once: true
+	    }));
 });
 
 
