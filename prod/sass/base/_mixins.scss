@@ -1,0 +1,45 @@
+/* MIX-INS & FUNCTIONS */
+
+@mixin breakpoint($point) {
+	@if $point == large {
+		@media only screen and (min-width : 1401px) { @content; }
+	}
+	@else if $point == landscape {
+		@media only screen and (min-width : 802px) and (max-width : 1025px) { @content; }
+	}
+	@else if $point == portrait {
+		@media only screen and (min-width : 642px) and (max-width : 801px) { @content; }
+	}
+	@else if $point == mobile {
+		@media only screen and (max-width : 641px) { @content; }
+	}
+}
+
+@mixin calc($property, $expression) {
+	#{$property}: -moz-calc(#{$expression});
+	#{$property}: -o-calc(#{$expression});
+	#{$property}: -webkit-calc(#{$expression});
+	#{$property}: calc(#{$expression});
+}
+
+
+
+// FONT-SIZE RESPONSIVE FUNCTIONS
+@function font-size-math($base, $size, $unit) {
+	@return (($size / $base) * $unit);
+}
+@function line-height-math($size, $line-height) {
+	@return ($line-height / $size);
+}
+@function letter-spacing-math($size, $letter-spacing) {
+	@return (($letter-spacing / $size) * 1em);
+}
+
+
+$base-value: 16;
+
+@mixin fontmath($unit, $size, $line-height, $letter-spacing) {
+	font-size: font-size-math($base-value, $size, $unit);
+	line-height: line-height-math($size, $line-height);
+	letter-spacing: letter-spacing-math($size, $letter-spacing);
+}

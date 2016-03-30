@@ -7,28 +7,7 @@ $experimental-support-for-khtml: false;
 @import "bourbon/bourbon";
 @import "includes/reset";
 
-
-/* MIX-INS */
-@mixin breakpoint($point) {
-	@if $point == large {
-		@media only screen and (min-width : 1401px) { @content; }
-	}
-	@else if $point == landscape {
-		@media only screen and (min-width : 802px) and (max-width : 1025px) { @content; }
-	}
-	@else if $point == portrait {
-		@media only screen and (min-width : 642px) and (max-width : 801px) { @content; }
-	}
-	@else if $point == mobile {
-		@media only screen and (max-width : 641px) { @content; }
-	}
-}
-@mixin calc($property, $expression) {
-  #{$property}: -moz-calc(#{$expression});
-  #{$property}: -o-calc(#{$expression});
-  #{$property}: -webkit-calc(#{$expression});
-  #{$property}: calc(#{$expression});
-}
+@import 'base/mixins';
 
 
 /* ADDITIONAL RESET */
