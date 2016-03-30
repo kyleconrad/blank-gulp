@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 	es = require('event-stream'),
 	sass = require('gulp-sass'),
 	sourcemaps = require('gulp-sourcemaps'),
-	minify = require('gulp-minify-css'),
+	cleanCSS = require('gulp-clean-css'),
 	uglify = require('gulp-uglify'),
 	imagemin = require('gulp-imagemin');
 
@@ -47,8 +47,8 @@ gulp.task('remove', function (cb) {
 
 gulp.task('minify', ['sass'], function() {
 	return gulp.src('./prod/css/*.css')
-		.pipe(minify({
-			keepSpecialComments: 0
+		.pipe(cleanCSS({
+			compatibility: '*'
 		}))
 		.pipe(gulp.dest('./dist/css'));
 });
