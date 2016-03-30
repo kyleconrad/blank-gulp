@@ -43,3 +43,12 @@ $base-value: 16;
 	line-height: line-height-math($size, $line-height);
 	letter-spacing: letter-spacing-math($size, $letter-spacing);
 }
+
+/*
+EXAMPLE USAGE:
+h1 {
+	@include fontmath(1rem, 36, 42, 4.5);
+}
+
+Ensure that the base unit has a 1 in front of it - whether it be 1em or 1rem, it's required to do the math. Do not use units for the other numbers (it assumes those are pixel values and converts them to the proper formats for responsive text).
+*/
