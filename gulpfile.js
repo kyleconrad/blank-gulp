@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
 
 	// Server and sync
-	browserSync = require('browser-sync'),
+	browserSync = require('browser-sync').create(),
 
 	// Other plugins
 	rimraf = require('rimraf'),
@@ -14,30 +14,42 @@ var gulp = require('gulp'),
 
 
 
-// Server initiation and livereload, opens server in browser
-gulp.task('serve', function() {
-	browserSync.init(null, {
+// =================================================================================== //
+
+
+
+// Server initiation, BrowserSync, and watch tasks (opens site in browser)
+gulp.task('default', ['sass'], function() {
+    browserSync.init(null, {
 		server: {
 			baseDir: './prod'
 		},
 		host: 'localhost'
     });
+
+	gulp.watch('./prod/sass/**/*.scss', ['sass']);
+    gulp.watch('./prod/**/*.html').on('change', browserSync.reload);
+    gulp.watch('./prod/img/**/*').on('change', browserSync.reload);
+    gulp.watch('./prod/js/**/*.js').on('change', browserSync.reload);
 });
 
 
-// SASS compiling & reloading
+// Run SASS compiling and reloading
 gulp.task('sass', function() {
-    gulp.src('./prod/sass/*.scss')
+    return gulp.src('./prod/sass/*.scss')
 	    .pipe(sourcemaps.init())
         .pipe(sass({
         	errLogToConsole: true
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./prod/css'))
-        .pipe(browserSync.reload({
-        	stream: true
-        }));
+        .pipe(browserSync.stream());
 });
+
+
+
+// =================================================================================== //
+
 
 
 // Clear 'dist' directory, then minifying, copying, processing, uglifying, etc for build
@@ -55,9 +67,9 @@ gulp.task('minify', ['sass'], function() {
 
 gulp.task('html', function() {
 	return es.merge(
-		gulp.src("./prod/**/*.html")
+		gulp.src('./prod/**/*.html')
 	  		.pipe(gulp.dest('./dist')),
-	  	gulp.src("./prod/**/*.txt")
+	  	gulp.src('./prod/**/*.txt')
 	  		.pipe(gulp.dest('./dist'))
 	);
 });
@@ -97,41 +109,6 @@ gulp.task('images', function() {
 	);
 });
 
-
-// Watching files for changes before reloading
-gulp.task('watch-img', function() {
-	gulp.src('./prod/img/**/*')
-	    .pipe(browserSync.reload({
-	    	stream: true
-	    }));
-});
-
-gulp.task('watch-js', function() {
-	gulp.src('./prod/**/*.js')
-	    .pipe(browserSync.reload({
-	    	stream: true,
-	    	once: true
-	    }));
-});
-
-gulp.task('watch-html', function() {
-	gulp.src('./prod/**/*.html')
-	    .pipe(browserSync.reload({
-	    	stream: true,
-	    	once: true
-	    }));
-});
-
-
-
-
-// Default functionality includes server with browser sync and watching
-gulp.task('default', ['serve', 'sass'], function(){
-	gulp.watch('./prod/sass/**/*.scss', ['sass']);
-	gulp.watch('./prod/img/**/*', ['watch-img']);
-	gulp.watch('./prod/js/**/*.js', ['watch-js']);
-	gulp.watch('./prod/**/*.html', ['watch-html']);
-});
 
 // Build functionality with cleaning, moving, compiling, etc.
 gulp.task('build', ['remove'], function(){
