@@ -1,0 +1,191 @@
+/* MIX-INS & FUNCTIONS */
+
+// BREAKPOINTS
+@mixin breakpoint($point) {
+	@if $point == xxlarge {
+		@media only screen and (min-width : $xxLargeSize) { @content; }
+	}
+	@else if $point == large {
+		@media only screen and (min-width : $largeSize) { @content; }
+	}
+	@else if $point == landscape {
+		@media only screen and (max-width : $landscapeSize) { @content; }
+	}
+	@else if $point == portrait {
+		@media only screen and (max-width : $portraitSize) { @content; }
+	}
+	@else if $point == mobile {
+		@media only screen and (max-width : $mobileSize) { @content; }
+	}
+	@else if $point == mobile-small {
+		@media only screen and (max-width : $mobileSmallSize) { @content; }
+	}
+}
+
+
+
+
+
+
+// FONT-SIZE RESPONSIVE FUNCTIONS
+@function font-size-math($base, $size, $unit) {
+	@return (($size / $base) * $unit);
+}
+@function line-height-math($size, $line-height) {
+	@return ($line-height / $size);
+}
+@function letter-spacing-math($size, $letter-spacing) {
+	@return (($letter-spacing / $size) * 1em);
+}
+
+
+@mixin fontmath($unit, $size, $line-height, $letter-spacing) {
+	font-size: font-size-math($base-value, $size, $unit);
+	line-height: line-height-math($size, $line-height);
+	letter-spacing: letter-spacing-math($size, $letter-spacing);
+}
+
+/*
+EXAMPLE USAGE:
+h1 {
+	@include fontmath(1em, 36, 42, 4.5);
+}
+
+Ensure that the base unit has a 1 in front of it - whether it be 1em or 1rem, it's required to do the math. Do not use units for the other numbers (it assumes those are pixel values and converts them to the proper formats for responsive text).
+*/
+
+
+
+
+
+
+// SCRIM GRADIENTS (BETTER EASING)
+// based on https://codepen.io/jmkII/pen/pParwj & https://css-tricks.com/easing-linear-gradients/
+$scrimStops: 	0% 0%,
+				26.2% 19%,
+				45.9% 34%,
+				61.8% 47%,
+				72.2% 56.5%,
+				80.6% 65%,
+				87.4% 73%,
+				92.5% 80.2%,
+				95.8% 86.1%,
+				97.9% 91%,
+				99.2% 95.2%,
+				99.8% 98.2%,
+				100% 100%;
+
+@function getColorStop($colorTo, $colorFrom, $weight, $stop) {
+	@return mix($colorFrom, $colorTo, $weight) $stop;
+}
+
+@function getColorStops($colorTo, $colorFrom) {
+	$stops: ();
+	@each $scrimStop in $scrimStops {
+		$stops: append($stops, getColorStop($colorTo, $colorFrom, nth($scrimStop, 1), nth($scrimStop, 2)), comma)
+	}
+	@return $stops;
+}
+
+@function scrim-linear-gradient($args...) {
+	@if (length($args) == 2) {
+		@return linear-gradient(#{getColorStops(nth($args, 1), nth($args, 2))});
+	}
+	@return linear-gradient(#{nth($args, 1)}, #{getColorStops(nth($args, 2), nth($args, 3))});
+}
+
+@function scrim-linear-gradient-right($args...) {
+	@if (length($args) == 2) {
+		@return linear-gradient(to right, #{getColorStops(nth($args, 1), nth($args, 2))});
+	}
+	@return linear-gradient(to right, #{nth($args, 1)}, #{getColorStops(nth($args, 2), nth($args, 3))});
+}
+
+@function scrim-linear-gradient-left($args...) {
+	@if (length($args) == 2) {
+		@return linear-gradient(to left, #{getColorStops(nth($args, 1), nth($args, 2))});
+	}
+	@return linear-gradient(to left, #{nth($args, 1)}, #{getColorStops(nth($args, 2), nth($args, 3))});
+}
+
+
+
+
+
+
+// CSS VARIABLES
+// based on http://codepen.io/vank0/pen/kkGvAb
+@function var($variable) {
+	@if($css4) {
+		@return unquote('var(' + $variable + ')');
+	} @else {
+		@return map-get($css-variables, $variable);
+	}
+}
+
+@mixin css4 {
+	@if ($css4) {
+		$css4-backup: $css4;
+
+		@if($compatibility) {
+			$css4: false !global;
+			@content;
+		}
+
+		$css4: true !global;
+		@content;
+
+		$css4: $css4-backup;
+	}
+
+	@else {
+		@content;
+	}
+}
+
+
+
+
+
+
+// NTH-CHILD MIXINS
+// based on https://css-tricks.com/extremely-handy-nth-child-recipes-sass-mixins/ & https://gist.github.com/adamgiese/717969cb38d4b30e1eff3d3abc6472f0
+@mixin valid-quantity($quantity) {
+	@if type-of($quantity) != 'number' {
+		@error 'The "quantity" parameter must be a number!';
+	}
+	@if not(unitless($quantity)) {
+		@error 'The "quantity" parameter must not have a unit!';
+	}
+	@if $quantity < 0 {
+		@error 'The "quantity" parameter must be at least 0!';
+	}
+}
+
+@mixin has-nth($expression, $element: '*') {
+	&:nth-last-child(#{$expression}):first-child,
+	&:nth-last-child(#{$expression}):first-child ~ #{$element} {
+		@content;
+	}
+}
+
+@mixin at-least($quantity, $element: '*') {
+	@include valid-quantity($quantity);
+	@include has-nth('n + #{$quantity}', $element) {
+		@content;
+	}
+}
+
+@mixin at-most($quantity, $element: '*') {
+	@include valid-quantity($quantity);
+	@include has-nth('-n + #{$quantity}', $element) {
+		@content;
+	}
+}
+
+@mixin has-exactly($quantity, $element: '*') {
+	@include valid-quantity($quantity);
+	@include has-nth('#{$quantity}', $element) {
+		@content;
+	}
+}
