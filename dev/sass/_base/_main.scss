@@ -1,1 +1,77 @@
 /* MAIN AREAS */
+
+// CSS VARIABLES
+@if($css4) {
+	:root {
+		@each $variable, $value in $css-variables {
+			#{$variable}: $value;
+		}
+	}
+}
+
+
+
+* {
+   	@include box-sizing(border-box);
+
+
+   	&:before,
+   	&:after {
+   		@include box-sizing(border-box);
+   	}
+}
+
+
+
+html {
+	min-height: 100%;
+	height: 100%;
+	-webkit-text-size-adjust: none;
+}
+
+
+
+body {
+	min-height: 100%;
+	width: 100%;
+	max-width: 100%;
+	
+	position: relative;
+	overflow-x: hidden;
+}
+
+
+
+main,
+nav,
+header,
+article,
+footer,
+section,
+div {
+	display: block;
+	position: relative;
+}
+
+
+
+nav,
+main,
+footer {
+	font-size: 1rem;
+
+
+	@include breakpoint(large) {
+	}
+	@include breakpoint(xxlarge) {
+	}
+
+	@include breakpoint(landscape) {
+	}
+	@include breakpoint(portrait) {
+	}
+	@include breakpoint(mobile) {
+	}
+	@include breakpoint(mobile-small) {
+	}
+}
