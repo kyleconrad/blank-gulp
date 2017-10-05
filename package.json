@@ -1,36 +1,39 @@
 {
-	"name": "blank",
-	"version": "0.1.0",
-	"description": "Blank Gulp Project",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Kyle Conrad <kyle@kyleconrad.com>",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/kyleconrad/blank-gulp.git"
-	},
-	"devDependencies": {
-		"browser-sync": "^2.18.12",
-		"gulp": "^3.9.1",
-		"gulp-file-include": "^1.1.0",
-		"gulp-rename": "^1.2.2",
-		"gulp-sass": "^3.1.0",
-		"gulp-sourcemaps": "^2.6.0"
-	},
-	"dependencies": {
-		"del": "^3.0.0",
-	    "gulp-clean-css": "^3.7.0",
-	    "gulp-concat": "^2.6.1",
-	    "gulp-gzip": "^1.4.0",
-	    "gulp-imagemin": "^3.3.0",
-	    "gulp-inject": "^4.2.0",
-	    "gulp-rev-replace": "^0.4.3",
-	    "gulp-revise": "^2.0.0",
-	    "gulp-sitemap": "^4.2.0",
-	    "gulp-uglify": "^3.0.0",
-	    "gulp-usemin": "^0.3.28",
-	    "imagemin-pngquant": "^5.0.1",
-	    "rimraf": "^2.6.1"
-	}
+  "name": "blank",
+  "version": "0.1.0",
+  "description": "Blank Gulp Project",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kyle Conrad <kyle@kyleconrad.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyleconrad/blank-gulp.git"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-file-include": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0"
+  },
+  "dependencies": {
+    "del": "^3.0.0",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-gzip": "^1.4.0",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-inject": "^4.2.0",
+    "gulp-rev-replace": "^0.4.3",
+    "gulp-revise": "^2.0.0",
+    "gulp-sitemap": "^4.2.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-usemin": "^0.3.28",
+    "imagemin-giflossy": "^5.1.10",
+    "imagemin-mozjpeg": "^6.0.0",
+    "imagemin-pngquant": "^5.0.1",
+    "imagemin-zopfli": "^5.1.0",
+    "rimraf": "^2.6.1"
+  }
 }

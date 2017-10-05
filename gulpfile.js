@@ -24,8 +24,13 @@ var gulp = require('gulp'),
 	gzip = require('gulp-gzip'),
 	usemin = require('gulp-usemin'),
 	inject = require('gulp-inject'),
+
 	imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
+    zopfli = require('imagemin-zopfli'),
+    mozjpeg = require('imagemin-mozjpeg'),
+    giflossy = require('imagemin-giflossy'),
+
     sitemap = require('gulp-sitemap');
 
 
@@ -211,26 +216,48 @@ gulp.task('cleanup', ['html'], function() {
 gulp.task('images', function() {
 	return gulp.src('./dev/images/**/*')
 		.pipe(imagemin([
-			imagemin.jpegtran({ progressive: true }),
-			imagemin.gifsicle({ interlaced: false }),
-			imagemin.svgo({ plugins: [{
-					removeViewBox: false
-				},
-				{
-					cleanupIDs: false
-				},
-				{
-					collapseGroups: false
-				},
-				{
-					convertShapeToPath: false
-				}]
-			})
-		], {
-				verbose: false,
-				use: [pngquant()]
-			}
-		))
+           	// PNG
+           	pngquant({
+				speed: 1,
+				quality: 98
+			}),
+			zopfli({
+				more: true
+            }),
+
+            // SVG
+            imagemin.svgo({
+            	plugins: [
+            		{
+            			removeViewBox: false
+            		},
+            		{
+            			cleanupIDs: false
+            		},
+            		{
+            			collapseGroups: false
+            		},
+            		{
+            			convertShapeToPath: false
+            		}
+            	]
+            }),
+
+            // JPG
+            imagemin.jpegtran({
+            	progressive: true
+            }),
+            mozjpeg({
+            	quality: 90
+            }),
+
+            // GIF
+            giflossy({
+            	optimize: 3,
+            	optimizationLevel: 3,
+            	lossy: 30
+            })
+		]))
 		.pipe(gulp.dest('./build/images'))
 });
 
