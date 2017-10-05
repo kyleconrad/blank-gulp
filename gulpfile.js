@@ -214,21 +214,23 @@ gulp.task('images', function() {
 			imagemin.jpegtran({ progressive: true }),
 			imagemin.gifsicle({ interlaced: false }),
 			imagemin.svgo({ plugins: [{
-				removeViewBox: false
-			},
-			{
-				cleanupIDs: false
-			},
-			{
-				collapseGroups: false
-			},
-			{
-				convertShapeToPath: false
-			}]
-		})], {
+					removeViewBox: false
+				},
+				{
+					cleanupIDs: false
+				},
+				{
+					collapseGroups: false
+				},
+				{
+					convertShapeToPath: false
+				}]
+			})
+		], {
 				verbose: false,
 				use: [pngquant()]
-		}))
+			}
+		))
 		.pipe(gulp.dest('./build/images'))
 });
 
