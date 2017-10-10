@@ -9,6 +9,7 @@ var gulp = require('gulp'),
 
 	// Required for development
 	sass = require('gulp-sass'),
+	autoprefixer = require('gulp-autoprefixer'),
 	sourcemaps = require('gulp-sourcemaps'),
 	fileinclude = require('gulp-file-include'),
 	rename = require('gulp-rename'),
@@ -87,8 +88,15 @@ gulp.task('html-watch', ['html-build'], function(done) {
 gulp.task('sass', function() {
     return gulp.src('./dev/sass/*.scss')
 	    .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(sourcemaps.write())
+        .pipe(sass({
+        	errLogToConsole: true
+        }))
+        .on('error', console.error.bind(console))
+        .pipe(autoprefixer({
+			browsers: ['last 2 versions'],
+			cascade: false
+		}))
+        .pipe(sourcemaps.write(''))
         .pipe(gulp.dest('./dev/css'))
         .pipe(browserSync.stream());
 });
@@ -131,6 +139,7 @@ gulp.task('scripts', function() {
 		.pipe(gulp.dest('./build/js'));
 
 	gulp.src('./dev/js/lib/*.js')
+		.pipe(sourcemaps.init())
 		.pipe(concat({
 			path: 'header.js',
 			cwd: ''
@@ -138,6 +147,7 @@ gulp.task('scripts', function() {
 		.pipe(uglify({
 			mangle: false
 		}))
+		.pipe(sourcemaps.write(''))
 		.pipe(gulp.dest('./build/js'))
 		.pipe(revise())
 		.pipe(revise.write())

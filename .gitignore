@@ -6,6 +6,9 @@
 build/
 build/**/*
 
+dev/*.html
+.dev/*.html
+
 .node_modules
 .node_modules/
 node_modules/

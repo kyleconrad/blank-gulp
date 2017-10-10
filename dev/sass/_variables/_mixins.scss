@@ -108,6 +108,13 @@ $scrimStops: 	0% 0%,
 	@return linear-gradient(to left, #{nth($args, 1)}, #{getColorStops(nth($args, 2), nth($args, 3))});
 }
 
+/*
+EXAMPLE USAGE:
+section {
+	background-image: scrim-linear-gradient(black, transparent);
+}
+*/
+
 
 
 
@@ -189,3 +196,10 @@ $scrimStops: 	0% 0%,
 		@content;
 	}
 }
+
+/*
+EXAMPLE USAGE:
+@include has-nth('n + 4', 'li') {
+	border: 0;
+}
+*/
