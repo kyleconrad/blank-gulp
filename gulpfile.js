@@ -55,7 +55,7 @@ gulp.task('default', ['html-build', 'sass'], function() {
 	gulp.watch('./dev/**/*.html', ['html-watch']);
     gulp.watch('./dev/sass/**/*.scss', ['sass']);
     gulp.watch('./dev/js/**/*.js').on('change', browserSync.reload);
-    gulp.watch('./dev/images/**/*').on('change', browserSync.reload);
+    gulp.watch('./dev/images/**/*').on('change', browserSync.stream);
 });
 
 
@@ -120,7 +120,8 @@ gulp.task('remove', function(cb) {
 gulp.task('minify', ['sass'], function() {
 	return gulp.src('./dev/css/*.css')
 		.pipe(cleanCSS({
-			compatibility: '*'
+			compatibility: '*',
+			specialComments: 'all'
 		}))
 		.pipe(gulp.dest('./build/css'))
 		.pipe(revise())
