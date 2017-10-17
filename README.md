@@ -8,7 +8,6 @@ Running local set up will install all necessary bundles and dependencies and the
     $ cd blank-gulp
     $ npm install --global gulp-cli
     $ npm install
-    $ bundle install
     $ gulp
 
 
