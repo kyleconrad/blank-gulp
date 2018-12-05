@@ -1,10 +1,12 @@
 /* VARIABLES */
 
-// RESPONSIVE SIZES
+// Responsive Sizes
 $xxLargeSize: 1900px;
 $largeSize: 1600px;
+
 $landscapeSize: 1130px;
 $portraitSize: 1005px;
+
 $mobileSize: 700px;
 $mobileSmallSize: 325px;
 
@@ -12,23 +14,39 @@ $mobileSmallSize: 325px;
 
 
 
-// COLORS
+// Colors
+$colors: (
+	white: white,
+	black: black
+);
 
 
 
 
 
-// FONTS
+// Fonts
 $base-value: 16;
 
+// $font-primary:
+// $font-primary--weight:
+// $font-primary--bold:
+
+// $font-secondary:
+// $font-secondary--weight:
+// $font-secondary--bold:
 
 
 
 
-// CSS VARIABLES
+
+// CSS Variables
 $css4: true;
 $compatibility: true;
 
+$var-fontsize: 1rem;
+$var-padding: 1em;
+
 $css-variables: (
-	--variable: 0
+	--fontsize: $var-fontsize,
+	--padding: $var-padding
 );

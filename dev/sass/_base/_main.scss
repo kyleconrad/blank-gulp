@@ -1,16 +1,61 @@
 /* MAIN AREAS */
 
-// CSS VARIABLES
+// CSS Variables
 @if($css4) {
 	:root {
 		@each $variable, $value in $css-variables {
 			#{$variable}: $value;
 		}
+
+
+
+		// @include breakpoint(large) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
+
+		// @include breakpoint(xxlarge) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
+
+
+
+		// @include breakpoint(landscape) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
+
+		// @include breakpoint(portrait) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
+
+
+
+		// @include breakpoint(mobile) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
+		
+		// @include breakpoint(mobile-small) {
+		// 	--fontsize:
+
+		// 	--padding:
+		// }
 	}
 }
 
 
 
+
+
+// Box Sizing & Basic Strcture
 * {
     box-sizing: border-box;
 
@@ -55,23 +100,43 @@ div {
 
 
 
-nav,
-main,
-footer {
-	font-size: 1rem;
 
 
-	@include breakpoint(large) {
-	}
-	@include breakpoint(xxlarge) {
+// Overflow
+.overflow--hidden {
+	overflow: hidden;
+}
+
+
+
+
+
+// Backgrounds & Border Colors
+@each $color, $value in $colors {
+	.bkg--#{$color} {
+		background-color: $value;
 	}
 
-	@include breakpoint(landscape) {
+
+
+	.fill--#{$color} {
+		fill: $value;
 	}
-	@include breakpoint(portrait) {
+
+
+
+	.border--#{$color} {
+		border-color: $value;
 	}
-	@include breakpoint(mobile) {
-	}
-	@include breakpoint(mobile-small) {
+}
+
+
+
+
+
+// Opacity
+@for $i from 1 through 10 {
+	.opacity--#{ 10 * $i } {
+		opacity: ( 0.1 * $i );
 	}
 }
