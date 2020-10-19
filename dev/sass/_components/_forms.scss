@@ -1,13 +1,7 @@
-// Buttons
+// Form Styles
 
-a:focus,
-button:focus {
-	outline: none;
-}
-
-
-
-button {
+input,
+select {
 	padding: 0;
 	margin: 0;
 
@@ -23,6 +17,4 @@ button {
 	outline: none;
 	
 	appearance: none;
-
-	cursor: pointer;
 }

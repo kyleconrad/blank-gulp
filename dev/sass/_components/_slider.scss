@@ -1,0 +1,132 @@
+// Slider
+
+// .flickity-enabled {
+// 	position: relative;
+// }
+
+// .flickity-enabled:focus {
+// 	outline: none;
+// }
+
+// .flickity-viewport {
+// 	overflow: hidden;
+// 	position: relative;
+// 	height: 100%;
+// }
+
+// .flickity-slider {
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 100%;
+// }
+
+
+
+
+
+// //// Slider Enabled
+// .flickity-enabled.is-draggable {
+// 	-webkit-tap-highlight-color: transparent;
+// 	tap-highlight-color: transparent;
+// 	-webkit-user-select: none;
+// 	-moz-user-select: none;
+// 	-ms-user-select: none;
+// 	user-select: none;
+// }
+
+// .flickity-enabled.is-draggable .flickity-viewport {
+// 	cursor: move;
+// 	cursor: -webkit-grab;
+// 	cursor: grab;
+// }
+
+// .flickity-enabled.is-draggable .flickity-viewport.is-pointer-down {
+// 	cursor: -webkit-grabbing;
+// 	cursor: grabbing;
+// }
+
+
+
+
+
+// //// Slider Dots
+// .flickity-page-dots {
+// 	position: absolute;
+
+// 	bottom: calc( #{ $var-padding } / 2 );
+// 	bottom: 0;
+
+// 	width: 100%;
+
+// 	padding: 0;
+
+// 	margin: 0;
+
+// 	list-style: none;
+
+// 	text-align: center;
+
+// 	line-height: 1;
+
+// 	transform: translateY( 50% );
+// }
+
+// .flickity-rtl .flickity-page-dots {
+// 	direction: rtl;
+// }
+
+// .flickity-page-dots .dot {
+// 	display: inline-block;
+
+// 	width: 20px;
+// 	height: 20px;
+
+// 	margin: 0 10px;
+
+// 	padding-left: 0;
+
+// 	border: 1px solid map-get( $colors, gold );
+
+// 	cursor: pointer;
+
+// 	font-size: 1em;
+
+// 	line-height: 0;
+	
+
+
+// 	&:hover,
+// 	&:active,
+// 	&:focus {
+// 		background: map-get( $colors, gold--medium );
+// 	}
+
+
+
+// 	@include breakpoint(landscape) {
+// 		width: 16px;
+// 		height: 16px;
+
+// 		margin: 0 8px;
+// 	}
+
+
+// 	@include breakpoint(portrait) {
+// 		width: 14px;
+// 		height: 14px;
+
+// 		margin: 0 7px;
+// 	}
+
+
+// 	@include breakpoint(mobile) {
+// 		width: 10px;
+// 		height: 10px;
+
+// 		margin: 0 5px;
+// 	}
+// }
+
+// .flickity-page-dots .dot.is-selected {
+// 	background: map-get( $colors, gold );
+// }

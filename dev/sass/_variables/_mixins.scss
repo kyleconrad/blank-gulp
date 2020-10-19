@@ -108,19 +108,20 @@ section {
 
 // CSS VARIABLES
 // based on http://codepen.io/vank0/pen/kkGvAb
-@function var($variable) {
-	@if($css4) {
-		@return unquote('var(' + $variable + ')');
-	} @else {
-		@return map-get($css-variables, $variable);
+@function var( $variable ) {
+	@if ( $css4 ) {
+		@return unquote( 'var(' + $variable + ')' );
+	}
+	@else {
+		@return map-get( $css-variables, $variable );
 	}
 }
 
 @mixin css4 {
-	@if ($css4) {
+	@if ( $css4 ) {
 		$css4-backup: $css4;
 
-		@if($compatibility) {
+		@if ( $compatibility ) {
 			$css4: false !global;
 			@content;
 		}
@@ -179,6 +180,13 @@ section {
 @mixin has-exactly($quantity, $element: '*') {
 	@include valid-quantity($quantity);
 	@include has-nth('#{$quantity}', $element) {
+		@content;
+	}
+}
+
+@mixin divisible-by($quantity, $offset: 0, $element: '*') {
+	@include valid-quantity($quantity);
+	@include has-nth('#{$quantity}n + #{$offset}', $element) {
 		@content;
 	}
 }

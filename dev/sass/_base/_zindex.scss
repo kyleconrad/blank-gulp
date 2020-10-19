@@ -1,6 +1,8 @@
-/* Z-INDEX & LAYERS */
+// Z-Index & Layers
 
-// Z-Index Loop
+
+
+//// Z-Index Loop
 @for $i from 1 through 10 {
 	.z--#{ $i } {
 		z-index: $i;

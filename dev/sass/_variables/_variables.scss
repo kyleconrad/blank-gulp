@@ -1,12 +1,10 @@
 /* VARIABLES */
 
-// Responsive Sizes
+// RESPONSIVE SIZES
 $xxLargeSize: 1900px;
 $largeSize: 1600px;
-
-$landscapeSize: 1130px;
-$portraitSize: 1005px;
-
+$landscapeSize: 1150px;
+$portraitSize: 1000px;
 $mobileSize: 700px;
 $mobileSmallSize: 325px;
 
@@ -14,39 +12,40 @@ $mobileSmallSize: 325px;
 
 
 
-// Colors
+// COLORS
 $colors: (
-	white: white,
-	black: black
+	white: white
 );
 
 
 
 
 
-// Fonts
+// FONTS
 $base-value: 16;
 
-// $font-primary:
-// $font-primary--weight:
-// $font-primary--bold:
+// $font-primary: "orpheuspro", Times, serif;
+// $font-primary--weight: 500;
 
-// $font-secondary:
-// $font-secondary--weight:
-// $font-secondary--bold:
-
-
-
+// $font-secondary: "IBM Plex Sans", sans-serif;
+// $font-secondary--weight: 400;
+// $font-secondary--light: 300;
+// $font-secondary--semibold: 600;
+// $font-secondary--bold: 700;
 
 
-// CSS Variables
+
+
+
+
+// CSS VARIABLES
 $css4: true;
 $compatibility: true;
 
+$var-padding: 5.5em;
 $var-fontsize: 1rem;
-$var-padding: 1em;
 
 $css-variables: (
-	--fontsize: $var-fontsize,
-	--padding: $var-padding
+	--padding: $var-padding,
+	--fontsize: $var-fontsize
 );

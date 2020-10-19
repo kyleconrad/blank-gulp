@@ -1,0 +1,40 @@
+// WIDTH & HEIGHT
+
+@for $i from 1 through 20 {
+	.width--#{ 5 * $i } {
+		width: 100% * ( 0.05 * $i );
+	}
+
+
+	.height--#{ 5 * $i } {
+		height: 100% * ( 0.05 * $i );
+	}
+}
+
+
+@include breakpoint(portrait) {
+	@for $i from 1 through 20 {
+		.portrait-width--#{ 5 * $i } {
+			width: 100% * ( 0.05 * $i );
+		}
+
+
+		.portrait-height--#{ 5 * $i } {
+			height: 100% * ( 0.05 * $i );
+		}
+	}
+}
+
+
+@include breakpoint(mobile) {
+	@for $i from 1 through 20 {
+		.mobile-width--#{ 5 * $i } {
+			width: 100% * ( 0.05 * $i );
+		}
+
+
+		.mobile-height--#{ 5 * $i } {
+			height: 100% * ( 0.05 * $i );
+		}
+	}
+}

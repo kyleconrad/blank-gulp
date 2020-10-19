@@ -1,0 +1,255 @@
+// FLEX CLASSES
+
+.flex--row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+
+.flex--column {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+
+
+.flex--start {
+	justify-content: flex-start;
+}
+
+.flex--center {
+	justify-content: center;
+}
+
+.flex--between {
+	justify-content: space-between;
+}
+
+.flex--end {
+	justify-content: flex-end;
+}
+
+
+.flex--align-start {
+	align-items: flex-start;
+}
+
+.flex--align-center {
+	align-items: center;
+}
+
+.flex--align-stretch {
+	align-items: stretch;
+}
+
+.flex--align-end {
+	align-items: flex-end;
+}
+
+
+.flex--self-left {
+	align-self: flex-start;
+}
+.flex--self-right {
+	align-self: flex-end;
+}
+
+
+.flex--flex {
+	flex: 1 1 0;
+}
+
+.flex--equal {
+	flex-basis: 0;
+}
+
+.flex--grow {
+	flex-grow: 1;
+}
+
+.flex--wrap {
+	flex-wrap: wrap;
+}
+
+.flex--shrink {
+	flex-shrink: 1;
+}
+
+.flex--shrink--0 {
+	flex-shrink: 0;
+}
+
+
+
+@for $i from 1 through 10 {
+	.flex--basis--#{ $i } {
+		flex-basis: calc( ( 100% / #{ $i } ) - 1px );
+		flex-shrink: 0;
+	}
+
+
+
+	.order--#{ $i } {
+		order: $i;
+	}
+}
+
+
+
+
+
+//// Responsive flex classes
+@include breakpoint(portrait) {
+	.portrait-flex--row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
+
+	.portrait-flex--column {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+	}
+
+
+	.portrait-flex--wrap {
+		flex-wrap: wrap;
+	}
+
+
+	.portrait-flex--grow {
+		flex-grow: 1;
+	}
+	
+
+	.portrait-flex--start {
+		justify-content: flex-start;
+	}
+
+	.portrait-flex--center {
+		justify-content: center;
+	}
+
+	.portrait-flex--between {
+		justify-content: space-between;
+	}
+
+	.portrait-flex--end {
+		justify-content: flex-end;
+	}
+
+
+	.portrait-flex--align-start {
+		align-items: flex-start;
+	}
+
+	.portrait-flex--align-stretch {
+		align-items: stretch;
+	}
+
+	.portrait-flex--align-center {
+		align-items: center;
+	}
+
+	.portrait-flex--align-end {
+		align-items: flex-end;
+	}
+
+
+	.portrait-flex--equal--auto {
+		flex-basis: auto;
+	}
+
+
+
+	@for $i from 1 through 10 {
+		.portrait-flex--basis--#{ $i } {
+			flex-basis: calc( ( 100% / #{ $i } ) - 1px );
+		}
+
+
+
+		.portrait-order--#{ $i } {
+			order: $i;
+		}
+	}
+}
+
+
+@include breakpoint(mobile) {
+	.mobile-flex--row {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+	}
+
+	.mobile-flex--column {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+	}
+
+
+	.mobile-flex--wrap {
+		flex-wrap: wrap;
+	}
+
+
+	.mobile-flex--grow {
+		flex-grow: 1;
+	}
+
+
+	.mobile-flex--start {
+		justify-content: flex-start;
+	}
+
+	.mobile-flex--center {
+		justify-content: center;
+	}
+
+	.mobile-flex--between {
+		justify-content: space-between;
+	}
+
+	.mobile-flex--end {
+		justify-content: flex-end;
+	}
+
+
+	.mobile-flex--align-start {
+		align-items: flex-start;
+	}
+
+	.mobile-flex--align-stretch {
+		align-items: stretch;
+	}
+
+	.mobile-flex--align-center {
+		align-items: center;
+	}
+
+	.mobile-flex--align-end {
+		align-items: flex-end;
+	}
+
+
+	.mobile-flex--equal--auto {
+		flex-basis: auto;
+	}
+
+
+
+	@for $i from 1 through 10 {
+		.mobile-flex--basis--#{ $i } {
+			flex-basis: calc( ( 100% / #{ $i } ) - 1px );
+		}
+
+
+
+		.mobile-order--#{ $i } {
+			order: $i;
+		}
+	}
+}
