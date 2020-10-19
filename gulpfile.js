@@ -2,6 +2,8 @@
 var dirDev = './dev',
 	dirBuild = './build';
 
+
+
 var paths = {
     styles: {
     	watch: dirDev + '/sass/**/*.scss',
@@ -18,7 +20,7 @@ var paths = {
     images: {
     	src: dirDev + '/images/**/*.*',
     	dest: dirDev + '/images',
-    	build: dirBuild + '/js'
+    	build: dirBuild + '/images'
     },
     templates: {
     	watch: dirDev + '/templates/**/*.tpl.html',
@@ -84,41 +86,16 @@ var 	gulp = require('gulp'),
 
 	    // Required for build
 	    rimraf = require('rimraf'),
-	    sitemap = require('gulp-sitemap');
+	    gzip = require('gulp-gzip'),
+		revise = require('gulp-revise'),
+		revReplace = require('gulp-rev-replace'),
+		sitemap = require('gulp-sitemap'),
+		del = require('del');
 
 
 
-// var gulp = require('gulp'),
 
-// 	// Server & BrowserSync
-// 	browserSync = require('browser-sync').create(),
 
-// 	// Required for development
-// 	sass = require('gulp-sass'),
-// 	autoprefixer = require('gulp-autoprefixer'),
-// 	sourcemaps = require('gulp-sourcemaps'),
-// 	fileinclude = require('gulp-file-include'),
-// 	rename = require('gulp-rename'),
-
-// 	// Required for build
-// 	rimraf = require('rimraf'),
-// 	del = require('del'),
-// 	cleanCSS = require('gulp-clean-css'),
-// 	revise = require('gulp-revise'),
-// 	revReplace = require('gulp-rev-replace'),
-// 	concat = require('gulp-concat'),
-// 	uglify = require('gulp-uglify'),
-// 	gzip = require('gulp-gzip'),
-// 	usemin = require('gulp-usemin'),
-// 	inject = require('gulp-inject'),
-
-// 	imagemin = require('gulp-imagemin'),
-//     pngquant = require('imagemin-pngquant'),
-//     zopfli = require('imagemin-zopfli'),
-//     mozjpeg = require('imagemin-mozjpeg'),
-//     giflossy = require('imagemin-giflossy'),
-
-//     sitemap = require('gulp-sitemap');
 
 
 
@@ -204,7 +181,7 @@ function headerJS() {
 function footerJS() {
 	return gulp
 		.src( paths.scripts.footer )
-		.pipe( uglify() )
+		// .pipe( uglify() )
 		.pipe( gulp.dest( paths.scripts.dest ) );
 }
 
@@ -309,178 +286,151 @@ exports.default = series(
 
 
 
+
+
+
+
+
 // =================================================================================== //
 // Build
 // =================================================================================== //
 
-
 // Clear build directory
-gulp.task('remove', function(cb) {
-    return rimraf('./build', cb);
-});
+function remove( done ) {
+	return rimraf( dirBuild, done );
+}
 
 
-// // Minify CSS
-// gulp.task('minify', ['sass'], function() {
-// 	return gulp.src('./dev/css/*.css')
-// 		.pipe(cleanCSS({
-// 			compatibility: '*',
-// 			specialComments: 'all'
-// 		}))
-// 		.pipe(gulp.dest('./build/css'))
-// 		.pipe(revise())
-// 		.pipe(revise.write())
-// 		.pipe(gulp.dest('./build/css'))
-// });
+
+// Copy CSS
+function copyCSS() {
+	return gulp
+		.src( paths.styles.dest + '/*.css' )
+		.pipe( gulp.dest( paths.styles.build ) )
+		.pipe( revise() )
+		.pipe( revise.write() )
+		.pipe( gulp.dest( paths.styles.build ) );
+}
 
 
-// // Concat and uglify JavaScript
-// gulp.task('scripts', function() {
-// 	gulp.src('./dev/js/*.js')
-// 		.pipe(uglify())
-// 		.pipe(gulp.dest('./build/js'))
-// 		.pipe(revise())
-// 		.pipe(revise.write())
-// 		.pipe(gulp.dest('./build/js'));
 
-// 	gulp.src('./dev/js/lib/*.js')
-// 		.pipe(sourcemaps.init())
-// 		.pipe(concat({
-// 			path: 'header.js',
-// 			cwd: ''
-// 		}))
-// 		.pipe(uglify({
-// 			mangle: false
-// 		}))
-// 		.pipe(sourcemaps.write(''))
-// 		.pipe(gulp.dest('./build/js'))
-// 		.pipe(revise())
-// 		.pipe(revise.write())
-// 		.pipe(gulp.dest('./build/js'));
-// });
+// Copy JS
+function copyJS() {
+	return gulp
+		.src( paths.scripts.dest + '/*.js' )
+		.pipe( uglify({
+			mangle: false
+		}) )
+		.pipe( gulp.dest( paths.scripts.build ) )
+		.pipe( revise() )
+		.pipe( revise.write() )
+		.pipe( gulp.dest( paths.scripts.build ) );
+}
 
 
-// // Gzip CSS and JavaScript
-// gulp.task('gzip', ['scripts', 'minify'], function() {
-// 	gulp.src('./build/js/*.js')
-// 		.pipe(gzip())
-//         .pipe(gulp.dest('./build/js'));
 
-//     gulp.src('./build/css/*.css')
-//     	.pipe(gzip())
-//     	.pipe(gulp.dest('./build/css'));
-// });
+// Copy images
+function copyImages() {
+	return gulp
+		.src( paths.images.dest + '/**/*.*' )
+		.pipe( gulp.dest( paths.images.build ) );
+}
 
 
-// // Merge revisions into revision file
-// gulp.task('merge', ['gzip'], function() {
-// 	return gulp.src('./build/**/*.rev')
-// 		.pipe(revise.merge('build'))
-// 		.pipe(gulp.dest('./build'))
-// });
+
+// Gzip
+function gzipCSS() {
+	return gulp
+		.src( paths.styles.build + '/*.css' )
+		.pipe( gzip() )
+		.pipe( gulp.dest( paths.styles.build ) );
+}
+
+function gzipJS() {
+	return gulp
+		.src( paths.scripts.build + '/*.js' )
+		.pipe( gzip() )
+		.pipe( gulp.dest( paths.scripts.build ) );
+}
 
 
-// // Build HTML files, use revision file, generate sitemap
-// gulp.task('html', ['merge'], function(cb) {
-// 	var manifest = gulp.src('./build/rev-manifest.json');
 
-// 	return Promise.all([
-// 		new Promise(function(resolve, reject) {
-// 			gulp.src('./dev/*.html')
-// 				.pipe(usemin())
-// 				.pipe(inject(gulp.src('./build/js/header.js', {
-// 					read: false
-// 				}), {
-// 					ignorePath: 'build',
-// 					removeTags: true,
-// 					name: 'header'
-// 				}))
-// 				.pipe(revReplace({
-// 					manifest: manifest
-// 				}))
-// 				.pipe(gulp.dest('./build'))
-// 				.on('end', resolve)
-// 			})
-// 		]).then(function () {
-// 			gulp.src('./build/**/*.html', {
-// 		            read: false
-// 		        })
-// 		        .pipe(sitemap({
-// 		            siteUrl: 'https://REPLACE-SITE-URL.com',
-// 		            changefreq: 'monthly',
-// 		            priority: 1
-// 		        }))
-// 		        .pipe(gulp.dest('./build'));
-// 		})
-// });
+// Merge revisions
+function merge() {
+	return gulp
+		.src( dirBuild + '/**/*.rev' )
+		.pipe( revise.merge( 'build' ) )
+		.pipe( gulp.dest( dirBuild ) );
+}
 
 
-// // Cleanup files
-// gulp.task('cleanup', ['html'], function() {
-// 	gulp.src('./dev/**/*.txt')
-//   		.pipe(gulp.dest('./build'));
 
-// 	gulp.src('./dev/fonts/**/*')
-//   		.pipe(gulp.dest('./build/fonts'));
+// Revise HTML
+function reviseHTML() {
+	var manifest = gulp.src( dirBuild + '/rev-manifest.json' );
 
-// 	del(['./build/rev-manifest.json', './build/**/*.rev']);
-// });
-
-
-// // Image minification
-// gulp.task('images', function() {
-// 	return gulp.src('./dev/images/**/*')
-// 		.pipe(imagemin([
-//            	// PNG
-//            	pngquant({
-// 				speed: 1,
-// 				quality: 98
-// 			}),
-// 			zopfli({
-// 				more: true
-//             }),
-
-//             // SVG
-//             imagemin.svgo({
-//             	plugins: [
-//             		{
-//             			removeViewBox: false
-//             		},
-//             		{
-//             			cleanupIDs: false
-//             		},
-//             		{
-//             			collapseGroups: false
-//             		},
-//             		{
-//             			convertShapeToPath: false
-//             		}
-//             	]
-//             }),
-
-//             // JPG
-//             imagemin.jpegtran({
-//             	progressive: true
-//             }),
-//             mozjpeg({
-//             	quality: 90
-//             }),
-
-//             // GIF
-//             giflossy({
-//             	optimize: 3,
-//             	optimizationLevel: 3,
-//             	lossy: 30
-//             })
-// 		]))
-// 		.pipe(gulp.dest('./build/images'))
-// });
+	return gulp
+		.src( paths.templates.dest + '/*.html' )
+		.pipe( revReplace({
+			manifest: manifest
+		}))
+		.pipe( gulp.dest( paths.templates.build ) )
+		.pipe( sitemap({
+			siteUrl: 'https://REPLACE-SITE-URL.com',
+			changefreq: 'monthly',
+			priority: 1
+		}))
+		.pipe( gulp.dest( paths.templates.build ) );
+}
 
 
-// // Main build function
-// gulp.task('build', ['remove'], function() {
-// 	return gulp.start(
-// 		'cleanup',
-// 		'images'
-// 	)
-// });
+
+// Copy text & fonts, delete revision file
+function copyTXT() {
+	return gulp
+		.src( dirDev + '/**/*.txt' )
+		.pipe( gulp.dest( dirBuild ) );
+}
+
+function copyfonts() {
+	return gulp
+		.src( dirDev + 'fonts/**/*.*')
+		.pipe( gulp.dest( dirBuild + '/fonts' ) );
+}
+
+function deleterev() {
+	return del( [
+	    dirBuild + '/rev-manifest.json',
+	    dirBuild + '/**/*.rev'
+	] );
+}
+
+
+
+// Build task
+exports.build = series(
+		remove,
+		parallel(
+			styles,
+			html,
+			headerJS,
+			footerJS,
+			images
+		),
+		parallel(
+			copyCSS,
+			copyJS,
+			copyImages
+		),
+		parallel(
+			gzipCSS,
+			gzipJS,
+			merge
+		),
+		reviseHTML,
+		parallel(
+	         copyTXT,
+	         copyfonts,
+	         deleterev
+		)
+	);
